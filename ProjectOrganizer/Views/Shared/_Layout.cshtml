@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - ProjectOrganizer</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+	
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+			<div class="container navbar-light" style="margin-left:0; margin-right:0; width:100%; max-width:100%">
+				<a class="navbar-brand " asp-area="" asp-controller="Home" asp-action="Index">Kanvas</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-inline-flex ">
+						<div class="d-inline-flex  justify-content-end" style="width:100%">
+							<div class="nav-item float-right">
+								<a class="btn btn-primary " style=" width: 110px" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
+							</div>
+							<div class="nav-item" style="margin-left:10px;">
+								<a class="btn btn-outline-primary" style=" width: 120px" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+							</div>
+						</div>
+
+					</div>
+			</div>
+		</nav>
+	</header>
+	<div class="">
+		<main role="main" class="pb-3 ">
+			@RenderBody()
+		</main>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

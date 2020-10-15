@@ -1,0 +1,285 @@
+﻿@model ProjectOrganizer.Models.ViewModels.BoardViewModel;
+
+@{
+	Layout = "BoardLayout";
+	var backgroundImg = Model.Project.BackgroundC.Contains("url(") ? Model.Project.BackgroundC.Replace("url(", "").Replace(")", "") : "";
+	bool isBgUrl = @backgroundImg.Contains("http") ? true : false;
+}
+
+<input type="hidden" id="projectId" value="@Model.Project.Id" />
+
+
+<div class="columns" style="float:right ;position:fixed; width: 100%; height: 100%; padding: 0; margin: 0">
+
+	<div data-toggle="modal" data-target="#ChangeBackgroundModal" class="text-center" style="position: fixed; margin-left: 15px; margin-bottom: 110px; bottom: 0; color: #fff; height: 48px; width: 48px; border-radius: 48px; padding:0; border:solid; border-color:#fff; opacity:0.5; cursor:pointer">
+		<i class="fas fa-image" style="padding-top:12px"></i>
+	</div>
+
+	<div class="text-center" style="position: fixed; margin-left: 15px; margin-bottom: 40px; bottom: 0; color: #fff; height: 48px; width: 48px; border-radius: 48px; padding:0;">
+		<i class="fas fa-tint" style="padding-top:5px"></i>
+		<input value="@Model.Project.BackgroundC" id="bgColorInput" type="color" class="form-control " style="cursor:pointer; transform: translateY(-35px); height: 100%; width: 100%; border: solid; margin: 0; padding: 0; opacity:0.5;  border-color:#fff">
+	</div>
+
+
+	<!--Board-->
+	<div class="main-container" style="padding-top: 60px; overflow-x: scroll; height: 99%; width: 100%;">
+		<div class="columns" style=" padding-right: 10px">
+			<ul class="columns group-list" id="card-groups" style="padding-left: 10px; padding-right: 10px">
+
+
+				@foreach (var group in Model.Project.CardGroups.OrderBy(c => c.Position))
+				{
+					<li class="column shadow" style="background:@group.Color" id="group@(group.Id)">
+						<div class="handle column-header" style="cursor:pointer">
+							<div class="handle columns" style="margin:0; width:100%">
+								<h6 onkeydown="if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }" class="handle editable-Gname" style="line-height:1.5rem; width:100%;" spellcheck="false" contenteditable="true">@group.Name</h6>
+								<button onclick=selectGroup('@group.Id') tabindex="0" data-toggle="popover" class="btn close float-right text-center" style="text-shadow:none;color:white;cursor:pointer; font-size: 18px; width:10%">
+									<span aria-hidden="true"><i class="fas fa-ellipsis-v"></i></span>
+								</button>
+							</div>
+						</div>
+						<ul class="task-list" id="@group.Id">
+							@foreach (var card in group.Cards.OrderBy(c => c.Position))
+							{
+								<li class="task" id="card@(card.Id)" style="display:block; background:@card.Color">
+									<div contenteditable="true" spellcheck="false" onkeydown="if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }" class="editable-Cname">@card.Name</div>
+									<div class="card-labels" id="card-label-list@(card.Id)">
+										@foreach (var label in card.LabelCards)
+										{
+											var labelItem = Model.Project.Labels.FirstOrDefault(l => l.Id == label.LabelId);
+
+											<span id="label@(labelItem.Id)" class="badge badge-pill" style="background: @labelItem.Color; color: #fff">@labelItem.Name</span>
+										}
+									</div>
+
+									<div class="task-menu justify-content-between">
+
+										<div id="deletecardbtn@(card.Id)" class="task-menu-button-delete task-menu-button"><i class="far fa-trash-alt"></i></div>
+
+										<div style="display:inline-flex">
+
+											<div id="colorcardbtn@(card.Id)" class="task-menu-button task-menu-button-color">
+												<i class="fas fa-palette"></i>
+												<input id="cardColorInput@(card.Id)" type="color" class="form-control card-color-input" style="cursor: pointer !important; transform: translate(-6px, -24px) !important; opacity: 0 !important; border-radius: 0 !important; height: 100% !important; width: 100% !important;">
+											</div>
+
+											<div id="labelcardbtn@(card.Id)" class="task-menu-button task-menu-button-label"><i class="fas fa-tag"></i></div>
+
+											<div id="attachmentcardbtn@(card.Id)" class="task-menu-button task-menu-button-attachment"><i class="fas fa-paperclip"></i></div>
+
+										</div>
+
+									</div>
+								</li>
+
+							}
+						</ul>
+						<div class="column-button">
+							<button onclick=addTask('@group.Id') class="btn btn-transparent" style="color:#fff">+ Add card</button>
+						</div>
+					</li>
+				}
+			</ul>
+			<div style="width: 260px; margin: 1rem auto">
+				<button onclick=addGroup() class="btn btn-transparent foreground-item-transparent" style="color:#fff ; width: 100%">+ New Group</button>
+			</div>
+		</div>
+
+
+	</div>
+
+	<!--Menu-->
+	<div id="main-menu" class="collapse container col-sm-2 shadow-lg float-right" style="background-color:#242d4788; height: 100%;z-index:1000; padding-top:50px; transition-duration:0s">
+		<div style="padding: 25px;">
+
+
+
+			<ul class="list-group">
+				<li class="btn list-group-item" style="text-align: center; padding: 5px; border: 0; background-color:transparent">
+					<a class="btn btn-transparent text-white">
+						<p>About project</p>
+					</a>
+				</li>
+				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+					<a data-toggle="modal" data-target="#ChangeBackgroundModal" class="btn btn-transparent  text-white">
+						<p>Change Background</p>
+					</a>
+				</li>
+
+				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+					<a data-toggle="modal" data-target="#ShareModal" class="btn btn-transparent  text-white">
+						<p>Share Project</p>
+					</a>
+				</li>
+				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+					<a data-toggle="modal" data-target="#CardAttachmentsModal" class="btn btn-transparent  text-white">
+						<p>Google Drive</p>
+					</a>
+				</li>
+				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+					<a data-toggle="modal" data-target="#SettingsModal" class="btn btn-transparent  text-white">
+						<p>Project Settings</p>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+</div>
+
+
+<!--Change Background Modal-->
+<div class="modal fade" id="ChangeBackgroundModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" style="position:absolute; top:0; left:20%;max-width:60%!important; height: 97.1vh;">
+		<div class="modal-content  modal-dialog-scrollable">
+			<div class="modal-header">
+				<h5 class="modal-title text-dark" id="ChangeBackgroundModalLabel">Background Image</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="text-dark">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body align-content-center">
+				<div class="align-self-center">
+					<div class="d-inline-flex" style="margin:20px; float:right">
+						<h6 class="text-dark" style="margin:auto;">Photos provided by</h6>
+						<a href="https://www.pexels.com">
+							<img src="https://images.pexels.com/lib/api/pexels.png" style="height:30px; margin-left:5px" />
+						</a>
+
+					</div>
+						<input type="text" class="form-control" placeholder="Search photos..." id="bgImageInput">
+					
+					<div id="thumbnailPhotoList" class="flex-wrap d-inline-flex justify-content-center">
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Project Settings Modal-->
+<div class="modal fade" id="SettingsModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-dark"><i class="fas fa-cog"></i> Project Settings</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="text-dark">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body align-content-center" style="margin-left: 150px; min-height: 400px">
+				<div class="col-8 align-self-center">
+					<button onclick=deleteProject() class="btn btn-danger">Delete Project</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--Card Label Modal-->
+<div class="modal fade" id="CardLabelModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal">
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h5 class="modal-title text-dark" style="margin-top: 4px;"><i class="fas fa-tag"></i> Card Labels</h5>
+				<div style=" margin-left:10px" class="btn btn-primary label-create-btn"><i class="fas fa-plus"></i></div>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="text-dark">&times;</span>
+				</button>
+			</div>
+			<div id="modal-label-list" class="modal-body align-content-center" style=" min-height: 400px">
+
+				@foreach (var item in Model.Project.Labels)
+				{
+					<div id="modal-label-cell@(item.Id)" class="d-inline-flex" style="margin-top:10px; width:100%">
+
+						<div id="modal-label@(item.Id)" class="label-name-btn" style="background:@item.Color">
+							<div onkeydown="if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }" contenteditable="true" spellcheck="false" class="editable-Lname">@item.Name</div>
+						</div>
+
+						<div class="btn btn-primary" style="margin-right: 5px; padding:0; width:50px;height:40px">
+							<i class="fas fa-palette" style="padding:10px"></i>
+							<input id="@item.Id" type="color" class="form-control label-color-btn" style="cursor: pointer !important; transform: translateY(-36px) !important; opacity: 0 !important; border-radius: 0 !important; height: 100% !important; width: 100% !important;">
+						</div>
+						<div id="@item.Id" class="btn btn-danger label-delete-btn"><i class="fas fa-trash-alt"></i></div>
+					</div>
+				}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Card Attachments Modal-->
+<div class="modal fade" id="CardAttachmentsModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-dark"><i class="fas fa-paperclip"></i> Card Attachments</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="text-dark">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body align-content-center" style="margin-left: 150px; min-height: 400px">
+				<div class="col-8 align-self-center">
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--Edit Group Popover-->
+<div id="popover-edit-group" class="" style="display: none; padding:0;">
+	<a class="btn list-group-item foreground-item-text foreground-item-transparent" style="color:#fff; padding:0; height:55px">
+		<div style="transform: translateY(15px) !important; font-size:15px">Change Color</div>
+		<input type="color" class="form-control" id="group-color-input" style="cursor: pointer !important; transform: translateY(-25px) !important; opacity:0 !important; height: 55px !important; width: 100px; padding:0">
+	</a>
+	<a class="btn list-group-item bg-danger text-white text-center delete-group" style="margin-top:10px;">- Delete</a>
+</div>
+
+
+<!--Clock
+	<div class="foreground-nav clock justify-content-center clock-close" style=" height:300px; width:400px; position:fixed; bottom:0px;">
+	<div class="btn foreground-nav text-white clock-toggle" style="margin-top: -38px; border-radius: 0; float: left">^</div>
+	<div class="text-center align-items-center justify-content-center" style="float:none; display:flex; font-family:'Proxima Nova'; font-size:50px">
+		<span id="time">00:00</span>
+	</div>
+</div>-->
+
+
+
+@section Scripts{
+
+	<script src="~/js/dragula.js"></script>
+
+	<script src="~/js/PexelsApiLogic.js"></script>
+	<script src="~/js/BoardLogic.js"></script>
+	<script src="~/js/ShareLogic.js"></script>
+	<script>
+
+
+		$(document).on("keypress", "#bgImageInput", function (e) {
+			if (e.which == 13) {
+				PexelSearch();
+			}
+		});
+
+		
+
+		document.getElementById('bgImageInput').value = 'landscape';
+		PexelSearch();
+
+	</script>
+	<!--
+	<script src="~/js/ClockLogic.js"></script>
+	 -->
+}

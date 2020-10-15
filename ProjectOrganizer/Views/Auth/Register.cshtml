@@ -1,0 +1,97 @@
+﻿@model ProjectOrganizer.Models.ViewModels.RegisterViewModel;
+@{
+
+	Layout = null;
+	ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="body">
+	<div class="container" style="max-width:450px!important">
+		<main role="main">
+
+			<div class="bg-light shadow" style="border-radius:3px; margin-top:20vh;background:#fff!important">
+				<div class="login d-flex align-items-center py-4">
+					<div class="container text-dark">
+						<div class="row">
+							<div class="col-lg-10 mx-auto">
+								<h3 class="mb-3">Sign up</h3>
+								<form asp-controller="Auth" asp-action="Register" method="post">
+									<input type="hidden" asp-for="ReturnUrl" />
+									<div class="form-group mb-3">
+										<label>Email</label>
+										<input type="email" asp-for="Email" required="" autofocus="" class="form-control">
+										<span asp-validation-for="Email"></span>
+									</div>
+									<div class="form-group mb-3">
+										<label>Username</label>
+										<input asp-for="Username" required="" autofocus="" class="form-control">
+										<span asp-validation-for="Username"></span>
+									</div>
+									<div class="form-group mb-4">
+										<label>Password</label>
+										<input asp-for="Password" type="password" required="" class="form-control">
+										<span asp-validation-for="Password"></span>
+									</div>
+									<div class="form-group mb-4">
+										<label>Confirm Password</label>
+										<input asp-for="ConfirmPassword" type="password" required="" class="form-control">
+										<span asp-validation-for="ConfirmPassword"></span>
+									</div>
+									<button type="submit" style="font-weight: 500;" class="btn btn-primary btn-block  mb-2">Register</button>
+									<div class="mb-2 text-center">or</div>
+
+								</form>
+								<form asp-controller="Auth" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="Google" method="post">
+									<button type="submit" class="btn btn-google btn-block  mb-2"><img src="~/images/google-logo.png" style="height:22px; float:left;" />Continue with Google</button>
+								</form>
+								<a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" style="display:block; text-align:center!important;margin-top:20px">Have an account? Sign in</a>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</main>
+	</div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>
+
+
+<style>
+
+	.btn-google {
+		color: #3e3e3e;
+		border-color: #bfbebe!important;
+		border: solid;
+		border-width: 1px;
+		font-weight: 500;
+	}
+		.btn-google:hover {
+			background: #d8d8d8;
+		}
+
+	.body {
+		background: #1488CC; /* fallback for old browsers */
+		background: -webkit-linear-gradient(to top, #2B32B2, #335dff); /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to top, #2B32B2, #335dff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	}
+
+	.login {
+		min-height: 60%;
+	}
+</style>

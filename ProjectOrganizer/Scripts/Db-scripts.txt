@@ -1,0 +1,5 @@
+﻿dotnet ef migrations add initpersist -c PersistedGrantDbContext -o Migrations/IdentityServer/PersistedGrantDb
+dotnet ef migrations add intconfig -c ConfigurationDbContext -o Migrations/IdentityServer/ConfigurationDb
+
+dotnet ef database update -c PersistedGrantDbContext
+dotnet ef database update -c ConfigurationDbContext

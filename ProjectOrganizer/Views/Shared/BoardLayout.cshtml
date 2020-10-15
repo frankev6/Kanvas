@@ -1,0 +1,176 @@
+﻿@model ProjectOrganizer.Models.ViewModels.BoardViewModel;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - ProjectOrganizer</title>
+
+	<script>
+		var isPublic = false;
+		var userRole = @((int)Model.ProjectUser.UserRole);
+	</script>
+
+
+	@if (@Model.Project.isPublic)
+	{
+		<script>isPublic = true;</script>
+	}
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<script src="https://kit.fontawesome.com/180f11b51a.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/css/BoardStyle.css" />
+</head>
+
+
+<body id="body">
+
+
+	<div id="board-background" style="background: @Model.Project.BackgroundC no-repeat;background-size:cover; background-attachment:fixed; position:fixed; height:100%; width:100%;"></div>
+
+	<header style="width: 100%; position: fixed; z-index: 1">
+		<nav class="navbar shadow foreground-nav" style=" width:100%">
+			<div class="container" style="margin-left: 0; width: 100%; margin-right: 0; margin-bottom: 0px; padding: 0">
+				<div class="d-inline">
+
+					<a class=" mr-sm-2 btn shadow-sm foreground-item-text foreground-item-transparent font-weight-bold" href="https://localhost:44343/Dashboard" style="cursor: pointer;width: 40px; height:40px;padding-top:2px;padding-left:8px; font-size: 20px;color:#fff"><i class="fas fa-home"></i></a>
+					<div spellcheck="false" contenteditable="true" class=" my-2 my-sm-0 navbar-brand foreground-item-text editable-Pname" onkeydown="if (event.keyCode == 13 || event.keyCode == 27) { $('.editable-Pname').blur(); return false; }"><strong> @Model.Project.Name</strong></div>
+					<div class="share-btn mr-sm-2 btn shadow-sm foreground-item-text foreground-item-transparent font-weight-bold" style="cursor: pointer;width: 100px; height:40px; padding-top:8px; font-size: 15px; color:#fff"><i class="fas fa-lock"></i>    Share</div>
+				</div>
+
+			</div>
+			<button class="btn shadow-sm foreground-item-text foreground-item-transparent text-center" data-toggle="collapse" data-target="#main-menu" style="cursor: pointer; width: 40px; height:40px; padding-top: 4px; padding-left: 11px; font-size: 20px;color:#fff"><i class="fas fa-bars"></i></button>
+		</nav>
+	</header>
+
+
+	<!--Project Share Modal-->
+	<div class="modal fade" id="ShareModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-dark"><i class="fas fa-lock"></i> Share with users and teams</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="text-dark">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body align-content-center" style="min-height: 400px">
+					<div class="align-self-center">
+
+						<div style="margin-bottom:20px">
+							<input type="text" id="share-adduser-input" class="form-control" placeholder="Add User..." />
+						</div>
+						
+						<div class="user-modal-list" id="share-user-list">
+
+							@foreach (var projectuser in Model.Project.ProjectUsers)
+							{
+							<div id="userbox@(projectuser.UserId)" class="d-flex text-dark justify-content-between user-modal-item" style="margin-bottom:10px">
+								<div class="d-flex">
+
+									<div class="small-user-thumnail">@char.ToUpper(projectuser.User.UserName.First())</div>
+									<div style="margin-top:3px;margin-left:8px">@projectuser.User.UserName</div>
+								</div>
+
+								@if (projectuser.UserRole == ProjectOrganizer.Models.WorkspaceModels.ProjectUser.UserRoles.Owner)
+								{
+
+									<div class="my-2 my-sm-0" style="margin-top:2px!important;color:#777e94">@projectuser.UserRole</div>
+								}
+								else
+								{
+									if (Model.ProjectUser.UserRole == ProjectOrganizer.Models.WorkspaceModels.ProjectUser.UserRoles.Viewer)
+									{
+										<div class="my-2 my-sm-0" style="margin-top:2px!important;color:#777e94">@projectuser.UserRole</div>
+									}
+									else { 
+									<div class="user-dropdown-modal dropdown my-2 my-sm-0" style="margin-top:2px!important; cursor:pointer">
+										<div role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<div id="dropdown@(projectuser.UserId)">@projectuser.UserRole <i class="fas fa-caret-down"></i></div>
+
+										</div>
+
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+											<div id="@projectuser.UserId" class="share-edit-option dropdown-item">Editor</div>
+											<div id="@projectuser.UserId" class="share-viewer-option dropdown-item">Viewer</div>
+											<div class="dropdown-divider"></div>
+											<div id="@projectuser.UserId" class="share-remove-option dropdown-item">Remove</div>
+										</div>
+									</div>
+									}
+								}
+							</div>
+							}
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer justify-content-center">
+
+					<div class="d-inline-flex">
+						<div style="margin-right:50px" class="text-dark">Make project public (anyone with the link can view): </div>
+						<label class="switch">
+							<input type="checkbox" id="share-public-option">
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="container" style="margin-left: 0; margin-right: 0;  padding-left: 0; padding-right: 0; overflow-x: auto">
+		<main role="main" class="" style="height: 100%">
+
+
+
+			@RenderBody()
+		</main>
+	</div>
+
+	<style>
+		
+
+		
+
+		.foreground-item {
+			background: #fff;
+		}
+		.foreground-item-text {
+			border-radius:0;
+		}
+
+		.foreground-item-transparent {
+			background: #242d47;
+			border-radius: 5px;
+		}
+			.foreground-item-transparent:hover {
+				background: #335dff;
+			}
+		.foreground-nav {
+			background: #1a2133;
+		}
+		.collapse {
+			display: block;
+			height: 100%;
+			overflow: hidden;
+		}
+
+	</style>
+
+
+	<script>
+		$(document).on('click', '.share-btn', function () {
+			$('#ShareModal').modal('show');
+		});
+
+	</script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

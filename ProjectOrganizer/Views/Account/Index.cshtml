@@ -1,0 +1,18 @@
+﻿@model ProjectOrganizer.Models.ViewModels.UserViewModel
+@{
+	ViewData["Title"] = "Account";
+	Layout = "DashboardLayout";
+}
+
+
+<div class="container row p-0 m-0 align-content-center">
+
+
+	<div class="col-11">
+		<h4 class="text-dark" style="font-family:'Proxima Nova'; padding-top:3rem">@Model.Username</h4>
+
+		<div class="text-dark">User id: @Model.Id</div>
+		<div class="text-dark">User email: @Model.Email</div>
+
+	</div>
+</div>

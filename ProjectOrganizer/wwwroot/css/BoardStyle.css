@@ -1,0 +1,385 @@
+﻿
+.task-menu {
+	margin-top: 0;
+	border-top: solid;
+	border-top-color: #ffffff45;
+	height: 0;
+	display: flex;
+	visibility:hidden;
+	opacity: 0;
+	transition-duration: 0.2s !important;
+}
+.task:hover .task-menu {
+	visibility:visible;
+	opacity: 1;
+	margin-top: 0.5rem;
+	height: 2.1rem;
+	width: 100%;
+}
+
+.task:hover .task-menu-button{
+height:1.5rem;
+width:1.5rem;
+margin:0.5rem;
+}
+
+task-menu-button-delete {
+	background: #ef5672!important;
+}
+
+.task-menu-button-delete:hover {
+	background: #ef5672!important;
+}
+.task-menu-button {
+	height: 0;
+	width: 0;
+	background: #ffffff45;
+	border-radius: 3px;
+	cursor: pointer !important;
+	transition-duration: 0.3s;
+	padding-left: 5px;
+}
+	.task-menu-button:hover {
+		background: #5677de;
+		transform: translateY(-3px);
+		
+	}
+
+.editable-Gname {
+	cursor:text;
+}
+
+	.editable-Gname:hover {
+		border-radius: 3px;
+		border-width: thick;
+		background: #00000088;
+		border-color: #00000088;
+	}
+
+.editable-Cname {
+	display: inline;
+	cursor: text;
+}
+
+	.editable-Cname:hover {
+		border-radius: 3px;
+		border-width: thick;
+		background: #00000088;
+		border-color: #00000088;
+	}
+
+
+.editable-Lname {
+	display: inline-block;
+	cursor: text;
+}
+
+	.editable-Lname:hover {
+		border-radius: 3px;
+		border-width: thick;
+		background: #00000088;
+		border-color: #00000088;
+	}
+
+
+.editable-Pname {
+}
+
+	.editable-Pname:hover {
+		border-radius: 3px;
+		border-width: thick;
+		background: #00000088;
+	}
+
+.content-editing {
+	background: #fffffff0 !important;
+	color: #000;
+	outline-color: transparent;
+}
+.add-task-container {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	width: 20rem;
+	height: 5.3rem;
+	margin: auto;
+	background: #fff;
+	padding: 0.4rem;
+}
+
+
+
+.main-container {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.columns {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	margin: 1rem auto;
+}
+
+.column {
+	width: 15rem;
+	margin: 0 0.2rem;
+	background: #1a2133;
+	font-family: 'Proxima Nova';
+	border-radius: 7px;
+}
+
+.column-header {
+	padding: 0.5rem;
+	align-content: start;
+	font-weight: 700
+}
+
+	.column-header h4 {
+		text-align: start;
+	}
+
+.to-do-column .column-header {
+	background: rgb(9,30,66);
+}
+
+.task-list {
+	min-height: 3rem;
+}
+
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+.column-button {
+	text-align: start;
+	padding: 0.1rem;
+}
+
+
+
+.task {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	vertical-align: middle;
+	list-style-type: none;
+	background: #242d47;
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
+	margin: 0.6rem;
+	cursor:pointer;
+	text-align: start;
+	vertical-align: middle;
+	transition-duration: 0.2s;
+	border-radius: 7px;
+	border-bottom: 5px;
+	padding: 7px;
+	color: #fff;
+}
+
+	.task:hover {
+		border-width:1px!important;
+		background: #323d5e;
+		border: solid;
+		border-color:#fff
+	}
+
+#taskText {
+	background: #fff;
+	border-radius: 0.5rem;
+	text-align: start;
+	font-family: 'Proxima Nova';
+	height: 4rem;
+	width: 7rem;
+	color: rgb(9,30,66);
+}
+
+.task p {
+	margin: 0.4rem;
+}
+
+.gu-mirror {
+	position: fixed !important;
+	margin: 0 !important;
+	z-index: 9999 !important;
+	opacity: 1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+}
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	border-radius: 48px;
+}
+
+	input[type="color"]::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+
+	input[type="color"]::-webkit-color-swatch {
+		border: none;
+		border-radius: 48px;
+	}
+
+.thumbnail-photo {
+	border-radius: 5px;
+	height: 200px;
+	width: 200px;
+	background-size: cover !important;
+	margin: 10px;
+	background-repeat: no-repeat !important;
+	cursor: pointer;
+	transition-duration: 0.8s;
+	background-position-x: left !important;
+}
+	.thumbnail-photo:hover {
+		box-shadow: inset 0 0 50px #000;
+		background-position-x: right!important;
+	}
+
+.label-name-btn {
+	display: inline;
+	width: 100%;
+	margin-right: 5px;
+	width: 100%;
+	border-radius:5px;
+	padding:8px;
+	height:40px;
+	cursor:pointer;
+}
+	.label-name-btn:hover {
+		background: #5677de !important;
+	}
+
+.badge {
+	font-weight: 500;
+	border: solid;
+	border-color: #ffffff61;
+	border-width: 1px;
+	margin-right: 4px;
+}
+.badge-pill {
+	border-radius: .25rem;
+	padding: .25em .4em;
+}
+
+
+.user-modal-item {
+	border-color: #f3f3ff!important;
+	border:solid;
+	border-width: medium;
+	border-radius: 5px;
+	padding: 7px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 48px;
+	height: 28px;
+}
+
+	/* Hide default HTML checkbox */
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .2s;
+	transition: .2s;
+}
+
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 20px;
+		width: 20px;
+		left: 4px;
+		bottom: 4px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+
+input:checked + .slider {
+	background-color: #335dff;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(20px);
+	-ms-transform: translateX(20px);
+	transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+	.slider.round:before {
+		border-radius: 50%;
+	}
+
+.user-dropdown-modal {
+	background: #fff;
+	border-radius: 5px;
+	color: #000;
+	cursor: pointer;
+}
+
+@keyframes blurin {
+	from {
+		filter: blur(10px);
+		transform: scale(3);
+	}
+
+	to {
+		transform: scale(1);
+		filter: none;
+	}
+}
+
+#board-background {
+	animation-name: blurin;
+	animation-duration: 1.2s;
+}
+
+.small-user-thumnail {
+	height: 30px;
+	width: 30px;
+	background-color: #335dff;
+	border-radius: 3px;
+	padding: 3px;
+	color: white;
+	font-weight: 500;
+	text-align: center;
+}

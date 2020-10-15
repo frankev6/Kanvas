@@ -1,0 +1,64 @@
+﻿@model ProjectOrganizer.Models.ViewModels.ExternalRegisterViewModel;
+@{
+
+	Layout = null;
+	ViewData["Title"] = "ExternalRegister";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="body">
+	<div class="container" style="max-width:450px!important">
+		<main role="main">
+
+			<div class="bg-light shadow" style="border-radius:3px; margin-top:26vh;background:#fff!important">
+				<div class="login d-flex align-items-center py-4">
+					<div class="container text-dark">
+						<div class="row">
+							<div class="col-lg-10 mx-auto">
+								<h3 class="mb-3">Sign up</h3>
+								<form asp-controller="Auth" asp-action="ExternalRegister" method="post">
+									<input type="hidden" asp-for="Email" />
+									<input type="hidden" asp-for="ReturnUrl" />
+									<div class="form-group mb-3">
+										<label>Username</label>
+										<input asp-for="Username" required="" autofocus="" class="form-control">
+										<span asp-validation-for="Username"></span>
+									</div>
+									<button type="submit" style="font-weight: 500;" class="btn btn-primary btn-block  mb-2">Register</button>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</main>
+	</div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>
+
+
+<style>
+	.body {
+		background: #1488CC; /* fallback for old browsers */
+		background: -webkit-linear-gradient(to top, #2B32B2, #335dff); /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to top, #2B32B2, #335dff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	}
+
+	.login {
+		min-height: 60%;
+	}
+</style>

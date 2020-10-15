@@ -1,0 +1,83 @@
+﻿@model ProjectOrganizer.Models.ViewModels.DashboardViewModel
+@{
+	ViewData["Title"] = "Dashboard";
+	Layout = "DashboardLayout";
+	
+
+}
+
+
+<div class="container row p-0 m-0 align-content-center">
+
+	<div class="col-11">
+		<h4 class="text-dark" style="font-family:'Proxima Nova'; padding-top:3rem">Personal Boards</h4>
+		<ul class="d-flex flex-wrap" style="padding-top: 20px; padding-left:0">
+			@foreach (var projectUser in Model.ProjectUsers)
+			{
+				if (projectUser.Project.Team == null)
+				{
+					<li class="board-section-list-item">
+						<a href="/board?id=@projectUser.Project.Id" style=" text-decoration: none">
+							<div class="board-tile" style="background: @projectUser.Project.BackgroundC">
+								<div class="board-tile-details">
+									<div dir="auto" class="board-tile-details-name" style="height:70%">
+										<div style=" overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 2; color: #fff;text-shadow: 0 0px 2px #000000a6;">@projectUser.Project.Name</div>
+									</div>
+								</div>
+
+							</div>
+						</a>
+					</li>
+				}
+
+			}
+			<li class="board-section-list-item align-content-center">
+				<a onclick=setSelectedTeam(@null) data-toggle="modal" data-target="#AddProjectModal" style=" text-decoration: none; align-content: center">
+					<div class="board-tile align-content-center " style="height:206px; border-radius:10px">
+						<div class="board-tile-details align-content-center">
+							<div class=" align-content-center">
+								<div style=" text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; text-align: center; vertical-align: central; margin-top: 5rem;font-size: 50px; color: #335dff">+</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+
+
+		@foreach (var team in Model.Teams)
+		{
+
+		<h4 class="text-dark" style="font-family:'Proxima Nova'; padding-top:3rem">@team.Team.Name's Boards</h4>
+		<ul class="d-flex flex-wrap" style="padding-top: 20px; padding-left:0">
+			@foreach (var projectUser in team.Team.TeamProjects)
+			{
+					<li class="board-section-list-item">
+						<a href="/board?id=@projectUser.Id" style=" text-decoration: none">
+							<div class="board-tile" style="background: @projectUser.BackgroundC">
+								<div class="board-tile-details">
+									<div dir="auto" class="board-tile-details-name" style="height:70%">
+										<div style=" overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 2; color: #fff; text-shadow: 0 0px 2px #000000a6;">@projectUser.Name</div>
+									</div>
+								</div>
+
+							</div>
+						</a>
+					</li>
+			}
+			<li class="board-section-list-item align-content-center">
+				<a onclick=setSelectedTeam('@team.TeamId') data-toggle="modal" data-target="#AddProjectModal" style=" text-decoration: none; align-content: center">
+					<div class="board-tile align-content-center " style="height:206px; border-radius:10px">
+						<div class="board-tile-details align-content-center">
+							<div class=" align-content-center">
+								<div style=" text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; text-align: center; vertical-align: central; margin-top: 5rem;font-size: 50px; color: #335dff">+</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+		}
+
+	</div>
+</div>
