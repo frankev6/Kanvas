@@ -1,13 +1,14 @@
 ﻿function createTeam() {
 
 	var teamId;
-	var team_name = document.getElementById('team-name').value;
+	var team_name = document.getElementById('teamNameEntry').value;
 
 	if (team_name == null || team_name.length == 0) {
+		document.getElementById('teamtErrorInfo').innerHTML = "Name of team is required.";
 		return;
 	}
 
-	$.post("/Teams/CreateTeam/",
+	$.post("Teams/CreateTeam/",
 		{
 			name: team_name
 		},
@@ -17,7 +18,7 @@
 }
 function deleteTeam(team_id) {
 
-	$.post("/Teams/DeleteTeam/",
+	$.post("Teams/DeleteTeam/",
 		{
 			teamId: team_id,
 			deleteProjects: true
@@ -28,7 +29,7 @@ function deleteTeam(team_id) {
 }
 function AddUserToTeam() {
 
-	$.post("/Teams/AddUserToTeam/",
+	$.post("Teams/AddUserToTeam/",
 		{
 			teamId: teamId,
 			username: document.getElementById('add-username-input').value

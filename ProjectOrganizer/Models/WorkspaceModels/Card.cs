@@ -30,7 +30,7 @@ namespace ProjectOrganizer.Models.WorkspaceModels
 		public ICollection<CommentModule> CommentModules { get; set; }
 		[JsonIgnore]
 		public ICollection<AttachmentModule> AttachmentModules { get; set; }
-
+		/*
 		[NotMapped]
 		public List<LabelModule> L_Labels { get; set; }
 		[NotMapped]
@@ -45,6 +45,6 @@ namespace ProjectOrganizer.Models.WorkspaceModels
 			LabelCards = new List<LabelCard>();
 			CommentModules = new List<CommentModule>();
 			AttachmentModules = new List<AttachmentModule>();
-		}
+		}*/
 	}
 }

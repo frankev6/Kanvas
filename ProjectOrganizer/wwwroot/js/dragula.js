@@ -404,7 +404,7 @@
                         if (!_mirror) {
                             return;
                         }
-                        e.preventDefault();
+                       // e.preventDefault();
 
                         var clientX = getCoord('clientX', e);
                         var clientY = getCoord('clientY', e);

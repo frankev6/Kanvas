@@ -126,13 +126,13 @@ namespace ProjectOrganizer.Controllers
 		{
 				Card cardToMove = db.Cards.FirstOrDefault(c => c.Id == cardId);
 
-				foreach (Card card in db.CardGroups.FirstOrDefault(c => c.Id == groupId).Cards)
+				/*foreach (Card card in db.CardGroups.FirstOrDefault(c => c.Id == groupId).Cards)
 				{
 					if (card.Position > cardToMove.Position)
 					{
 						card.Position--;
 					}
-				}
+				}*/
 
 			   CardGroup newCardGroup = db.CardGroups.Include(c => c.Cards).FirstOrDefault(c => c.Id == newGroupId);
 
@@ -286,13 +286,13 @@ namespace ProjectOrganizer.Controllers
 		{
 				Card cardToDelete = db.Cards.Include(c => c.LabelCards).Include(c => c.CardGroup).ThenInclude(c => c.Cards).FirstOrDefault(c => c.Id == cardId);
 
-				foreach (Card card in cardToDelete.CardGroup.Cards)
+				/*foreach (Card card in cardToDelete.CardGroup.Cards)
 				{
 					if (card.Position > cardToDelete.Position)
 					{
 						card.Position--;
 					}
-				}
+				}*/
 				cardToDelete.LabelCards.Clear();
 
 				db.Cards.Remove(cardToDelete);
@@ -305,9 +305,10 @@ namespace ProjectOrganizer.Controllers
 		public IActionResult DeleteGroup(string groupId)
 		{
 
-				var cardGroup = db.CardGroups.Include(c => c.Cards).FirstOrDefault(c => c.Id == groupId);
+				var cardGroup = db.CardGroups.Include(c => c.Cards).ThenInclude(lb => lb.LabelCards).FirstOrDefault(c => c.Id == groupId);
 
-				foreach (var card in cardGroup.Cards) { card.LabelCards.Clear(); }
+			foreach (var card in cardGroup.Cards)
+			{ card.LabelCards.Clear(); }
 
 				db.CardGroups.Remove(cardGroup);
 
@@ -482,7 +483,7 @@ namespace ProjectOrganizer.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> CreateAttachment(string projectId, string cardId, string aUrl, string aName, string aFileId, string aType) {
+		public async Task<IActionResult> CreateAttachment(string projectId, string cardId, string aUrl, string aName, string aFileId, string aType, string aEmbedUrl) {
 			var user = await userManager.GetUserAsync(this.User);
 			var projectUser = db.ProjectUser.FirstOrDefault(p => p.ProjectId == projectId && p.UserId == user.Id);
 
@@ -497,14 +498,16 @@ namespace ProjectOrganizer.Controllers
 				FileId = aFileId, 
 				Name = aName, 
 				DocumentType = aType,
-				Url = aUrl, 
+				Url = aUrl,
+				EmbedUrl = aEmbedUrl,
 				Position = card.AttachmentModules.Count 
 			};
 
 			card.AttachmentModules.Add(aModule);
 
 			db.SaveChanges();
-			return NoContent();//json
+			string jsonString = JsonConvert.SerializeObject(aModule);
+			return Json(new { success = true, responseText = jsonString });
 		}
 
 		[HttpPost]
@@ -520,19 +523,24 @@ namespace ProjectOrganizer.Controllers
 			Card card = db.Cards.Include(c => c.AttachmentModules).FirstOrDefault(c => c.Id == cardId);
 
 			AttachmentModule aModule = card.AttachmentModules.FirstOrDefault(a => a.Id == aId);
-			if (otherAId == null)//to bottom of list
+		
+			if (otherAId == null)//end of list
 			{
-				aModule.Position = card.AttachmentModules.Count;
-
-			}else { 
-				AttachmentModule otherAModule = card.AttachmentModules.FirstOrDefault(a => a.Id == otherAId);
-			
-			
+				aModule.Position = project.CardGroups.Count;
 			}
+			else
+			{// insterted somewhere in the list
 
+				aModule.Position = card.AttachmentModules.FirstOrDefault(c => c.Id == otherAId).Position;
 
-
-
+				foreach (var am in card.AttachmentModules)
+				{
+					if (am.Position >= aModule.Position && am.Id != aModule.Id)
+					{
+						am.Position++;
+					}
+				}
+			}
 
 			db.SaveChanges();
 			return NoContent();
@@ -557,11 +565,21 @@ namespace ProjectOrganizer.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult GetCardAttachments(string cardId)
+		public async Task<IActionResult> GetCardAttachments(string projectId, string cardId)
 		{
+			var user = await userManager.GetUserAsync(this.User);
+			var projectUser = db.ProjectUser.FirstOrDefault(p => p.ProjectId == projectId && p.UserId == user.Id);
+			if (projectUser == null)
+			{
+				return NoContent();
+			}
+
 			Card card = db.Cards.Include(c => c.AttachmentModules).FirstOrDefault(c => c.Id == cardId);
 
-			return NoContent();//json
+			List<AttachmentModule> alist = card.AttachmentModules.OrderBy(a => a.Position).ToList();
+
+			string jsonString = JsonConvert.SerializeObject(alist);
+			return Json(new { success = true, responseText = jsonString });
 		}
 
 

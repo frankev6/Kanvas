@@ -17,7 +17,7 @@
 				if (projectUser.Project.Team == null)
 				{
 					<li class="board-section-list-item">
-						<a href="/board?id=@projectUser.Project.Id" style=" text-decoration: none">
+						<a href="board?id=@projectUser.Project.Id" style=" text-decoration: none">
 							<div class="board-tile" style="background: @projectUser.Project.BackgroundC">
 								<div class="board-tile-details">
 									<div dir="auto" class="board-tile-details-name" style="height:70%">
@@ -53,7 +53,7 @@
 			@foreach (var projectUser in team.Team.TeamProjects)
 			{
 					<li class="board-section-list-item">
-						<a href="/board?id=@projectUser.Id" style=" text-decoration: none">
+						<a href="board?id=@projectUser.Id" style=" text-decoration: none">
 							<div class="board-tile" style="background: @projectUser.BackgroundC">
 								<div class="board-tile-details">
 									<div dir="auto" class="board-tile-details-name" style="height:70%">

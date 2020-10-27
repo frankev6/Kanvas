@@ -48,7 +48,7 @@ namespace ProjectOrganizer.Controllers
 			var result = await _signInManager.PasswordSignInAsync(vm.Username, vm.Password, true, false);
 
 			if (result.Succeeded) {
-				return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost:44343/Dashboard");
+				return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost/Kanvas/Dashboard");
 			}
 
 			return View(vm);
@@ -59,7 +59,7 @@ namespace ProjectOrganizer.Controllers
 		{
 			if (string.IsNullOrEmpty(returnUrl))
 			{
-				returnUrl = "localhost:44343/Dashboard";
+				returnUrl = "localhost/Kanvas/Dashboard";
 			}
 			return View(new RegisterViewModel { ReturnUrl = returnUrl });
 		}
@@ -77,7 +77,7 @@ namespace ProjectOrganizer.Controllers
 			{
 				await _signInManager.SignInAsync(user, true);
 
-				return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost:44343/Dashboard");
+				return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost/Kanvas/Dashboard");
 			}
 
 			return View();
@@ -139,7 +139,7 @@ namespace ProjectOrganizer.Controllers
 			await _signInManager.SignInAsync(user,true);
 
 
-			return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost:44343/Dashboard");
+			return Redirect(vm.ReturnUrl != null ? vm.ReturnUrl : "localhost/Kanvas/Dashboard");
 		}
 
 	}

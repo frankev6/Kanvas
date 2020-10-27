@@ -4,42 +4,66 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - ProjectOrganizer</title>
+	<script src="https://kit.fontawesome.com/180f11b51a.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
-			<div class="container navbar-light" style="margin-left:0; margin-right:0; width:100%; max-width:100%">
-				<a class="navbar-brand " asp-area="" asp-controller="Home" asp-action="Index">Kanvas</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-inline-flex ">
-						<div class="d-inline-flex  justify-content-end" style="width:100%">
-							<div class="nav-item float-right">
-								<a class="btn btn-primary " style=" width: 110px" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
-							</div>
-							<div class="nav-item" style="margin-left:10px;">
-								<a class="btn btn-outline-primary" style=" width: 120px" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-							</div>
-						</div>
+</head>
+<body id="body" style="background:#335dff" onscroll=CheckScroll()>
 
-					</div>
+	<header>
+		<div id="top-nav" class="d-inline-flex pt-2 pb-2 pl-4 pr-4 justify-content-between" style="position:fixed; width:100vw; top:0; background:#335dff; z-index:10000">
+			<a class="text-white font-weight-bold" style="text-decoration:none;font-size:25px" asp-area="" asp-controller="Home" asp-action="Index">okanban</a>
+
+			<!--<div class="d-inline-flex ml-3" style="margin-top:auto">
+				<a class="navbar-link " asp-area="" asp-controller="Auth" asp-action="Register">About</a>
+				<a class="navbar-link  ml-3" asp-area="" asp-controller="Auth" asp-action="Register">Contact</a>
+			</div>-->
+
+			<div class="d-inline-flex ml-3">
+				<div>
+					<a class="btn btn-light " style=" width: 110px" asp-area="" asp-controller="Auth" asp-action="Register">Sign up</a>
+				</div>
+				<div class="ml-3">
+					<a class="btn btn-outline-light" style=" width: 120px" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+				</div>
 			</div>
-		</nav>
+		</div>
 	</header>
 	<div class="">
 		<main role="main" class="pb-3 ">
 			@RenderBody()
 		</main>
 	</div>
+	<footer>
+		<div class="text-center"></div>
+
+		<div class="text-center">© 2020 Copyright okanban.com</div>
+	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+		AOS.init();
+	</script>
+	<style>
+		.navbar-link {
+			color: #fff;
+			text-decoration: none !important;
+			font-weight: 500;
+			opacity: 0.7;
+		}
 
+			.navbar-link:hover {
+				color: #fff;
+				opacity: 1;
+			}
+	</style>
 	@RenderSection("Scripts", required: false)
 </body>
+
+
 </html>
+

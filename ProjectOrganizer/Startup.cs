@@ -78,7 +78,11 @@ namespace ProjectOrganizer
 
 				config.ClientId = "286961498643-b11hr09emksrm6hnaq3nomjddvgiqt9q.apps.googleusercontent.com";
 				config.ClientSecret = "ez8fjpHTUS_PQtmyyy6ENNas";
-				//config.SaveTokens = true;
+
+			}).AddMicrosoftAccount(config => {
+
+				config.ClientId = "153d63b1-b281-4d68-90ae-d8f9fc870312";
+				config.ClientSecret = "8M2uB1~d_QvWg8C~s4_QEVek6bVi-ejhrv";
 
 			});
 			

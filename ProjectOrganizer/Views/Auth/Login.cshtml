@@ -34,7 +34,7 @@
 										<label>Password</label>
 										<input asp-for="Password" type="password" required="" class="form-control">
 										<span asp-validation-for="Password"></span>
-									<a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" style="text-align:center!important; font-size:13px">Forgot your password?</a>
+										<a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" style="text-align:center!important; font-size:13px">Forgot your password?</a>
 									</div>
 									<button type="submit" class="btn btn-primary btn-block  mb-2" style=" font-weight: 500;">Sign in</button>
 									<div class="mb-2 text-center">or</div>
@@ -42,7 +42,10 @@
 								<form asp-controller="Auth" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="Google" method="post">
 									<button type="submit" class="btn btn-google btn-block  mb-2"><img src="~/images/google-logo.png" style="height:22px; float:left;" />Continue with Google</button>
 								</form>
-									<a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" style="display:block; text-align:center!important;margin-top:20px">No Account? Register</a>
+								<form asp-controller="Auth" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="Microsoft" method="post">
+									<button type="submit" class="btn btn-google btn-block  mb-2"><img src="~/images/microsoft_logo.png" style="height:22px; float:left;" />Continue with Microsoft</button>
+								</form>
+								<a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" style="display:block; text-align:center!important;margin-top:20px">No Account? Register</a>
 							</div>
 						</div>
 					</div>
@@ -73,9 +76,7 @@
 			background: #d8d8d8;
 		}
 	.body {
-		background: #1488CC; /* fallback for old browsers */
-		background: -webkit-linear-gradient(to top, #2B32B2, #335dff); /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(to top, #2B32B2, #335dff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		background: #335dff;
 	}
 	.login {
 		min-height: 60%;

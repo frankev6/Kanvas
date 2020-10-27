@@ -445,7 +445,8 @@ C:\Dev\ProjectOrganizer\ProjectOrganizer\bin\Debug\netcoreapp3.1\Google.Apis.Aut
 C:\Dev\ProjectOrganizer\ProjectOrganizer\bin\Debug\netcoreapp3.1\Google.Apis.Auth.dll
 C:\Dev\ProjectOrganizer\ProjectOrganizer\bin\Debug\netcoreapp3.1\Google.Apis.Core.dll
 C:\Dev\ProjectOrganizer\ProjectOrganizer\bin\Debug\netcoreapp3.1\Google.Apis.Drive.v3.dll
+C:\Dev\ProjectOrganizer\ProjectOrganizer\obj\Debug\netcoreapp3.1\Razor\Views\Auth\ExternalRegister.cshtml.g.cs
+C:\Dev\ProjectOrganizer\ProjectOrganizer\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.MicrosoftAccount.dll
 C:\Dev\ProjectOrganizer\ProjectOrganizer\obj\Debug\netcoreapp3.1\ProjectOrganizer.csproj.CoreCompileInputs.cache
 C:\Dev\ProjectOrganizer\ProjectOrganizer\obj\Debug\netcoreapp3.1\ProjectOrganizer.MvcApplicationPartsAssemblyInfo.cs
 C:\Dev\ProjectOrganizer\ProjectOrganizer\obj\Debug\netcoreapp3.1\ProjectOrganizer.MvcApplicationPartsAssemblyInfo.cache
-C:\Dev\ProjectOrganizer\ProjectOrganizer\obj\Debug\netcoreapp3.1\Razor\Views\Auth\ExternalRegister.cshtml.g.cs

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xGUb4JNt7vHsHdafX2x1gpdOEyXAwJN+PtQKWQNTMjEAt6Kj8i9zO+ft84nUVfIt8B/QBsLzd8vW7njk1gUfOw==",
+  "dgSpecHash": "74/Ium+estzA9kFMxXb6AXkqgwwmPIRD4T0CCOOAu9PVu58XrDax1A6+UDNlFJrp6o3qFQBpHCjl9CVA8pO2mQ==",
   "success": true,
   "projectFilePath": "C:\\Dev\\ProjectOrganizer\\ProjectOrganizer\\ProjectOrganizer.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\Frank\\.nuget\\packages\\identityserver4.entityframework.storage\\4.1.0\\identityserver4.entityframework.storage.4.1.0.nupkg.sha512",
     "C:\\Users\\Frank\\.nuget\\packages\\identityserver4.storage\\4.1.0\\identityserver4.storage.4.1.0.nupkg.sha512",
     "C:\\Users\\Frank\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\3.1.8\\microsoft.aspnetcore.authentication.google.3.1.8.nupkg.sha512",
+    "C:\\Users\\Frank\\.nuget\\packages\\microsoft.aspnetcore.authentication.microsoftaccount\\3.1.9\\microsoft.aspnetcore.authentication.microsoftaccount.3.1.9.nupkg.sha512",
     "C:\\Users\\Frank\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\3.1.0\\microsoft.aspnetcore.authentication.openidconnect.3.1.0.nupkg.sha512",
     "C:\\Users\\Frank\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.8\\microsoft.aspnetcore.cryptography.internal.3.1.8.nupkg.sha512",
     "C:\\Users\\Frank\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.8\\microsoft.aspnetcore.cryptography.keyderivation.3.1.8.nupkg.sha512",

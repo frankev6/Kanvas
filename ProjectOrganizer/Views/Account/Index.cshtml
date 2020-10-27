@@ -5,14 +5,36 @@
 }
 
 
-<div class="container row p-0 m-0 align-content-center">
+<div style="width:85vh" class="m-5">
 
 
-	<div class="col-11">
-		<h4 class="text-dark" style="font-family:'Proxima Nova'; padding-top:3rem">@Model.Username</h4>
+	<div style="width:100%">
+		<div class="profile-circle">@char.ToUpper(Model.Username[0])</div>
 
-		<div class="text-dark">User id: @Model.Id</div>
-		<div class="text-dark">User email: @Model.Email</div>
+		<div class="m-auto text-center">
+		<h4 class="text-dark p-5" style="font-family:'Proxima Nova';">@Model.Username</h4>
 
+		@if (!string.IsNullOrEmpty(Model.Email))
+		{
+		<div class="text-dark">Email: @Model.Email</div>
+		}
+		<div class="text-dark">(Debugging) User id: @Model.Id</div>
+
+		</div>
 	</div>
 </div>
+<style>
+	.profile-circle {
+		background: #335dff;
+		color: #fff;
+		height: 15vh;
+		width: 15vh;
+		align-content: center;
+		border-radius: 7.5vh;
+		text-align: center;
+		padding: 3.3vh;
+		font-weight:600;
+		font-size:5vh;
+		margin:auto;
+	}
+</style>

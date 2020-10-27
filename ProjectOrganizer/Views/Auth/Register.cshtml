@@ -52,6 +52,9 @@
 								<form asp-controller="Auth" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="Google" method="post">
 									<button type="submit" class="btn btn-google btn-block  mb-2"><img src="~/images/google-logo.png" style="height:22px; float:left;" />Continue with Google</button>
 								</form>
+								<form asp-controller="Auth" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-provider="Microsoft" method="post">
+									<button type="submit" class="btn btn-google btn-block  mb-2"><img src="~/images/microsoft_logo.png" style="height:22px; float:left;" />Continue with Microsoft</button>
+								</form>
 								<a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" style="display:block; text-align:center!important;margin-top:20px">Have an account? Sign in</a>
 
 							</div>
@@ -86,9 +89,7 @@
 		}
 
 	.body {
-		background: #1488CC; /* fallback for old browsers */
-		background: -webkit-linear-gradient(to top, #2B32B2, #335dff); /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(to top, #2B32B2, #335dff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		background: #335dff;
 	}
 
 	.login {

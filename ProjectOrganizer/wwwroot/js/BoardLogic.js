@@ -64,7 +64,7 @@ drakeGroup.on("drop", function (el, target, source, sibling) {
 
 	function deleteCard(cardId) {
 
-	$.post("/Board/DeleteCard/",
+	$.post("Board/DeleteCard/",
 		{
 			cardId: cardId
 		},
@@ -99,7 +99,7 @@ function hidePopups() {
 
 	function deleteGroup() {
 		hidePopups();
-	$.post("/Board/DeleteGroup/",
+	$.post("Board/DeleteGroup/",
 		{
 			groupId: selectedGroupId
 		},
@@ -114,7 +114,7 @@ function hidePopups() {
 
 	function moveCard(groupId, newGroupId, cardId, siblingId) {
 
-	$.post("/Board/MoveCard/",
+	$.post("Board/MoveCard/",
 		{
 			groupId: groupId,
 			newGroupId: newGroupId,
@@ -128,7 +128,7 @@ function hidePopups() {
 
 	function moveGroup(groupId, siblingId) {
 	
-		$.post("/Board/MoveGroup/",
+		$.post("Board/MoveGroup/",
 			{
 				projectId: projectId,
 				groupId: groupId,
@@ -141,7 +141,7 @@ function hidePopups() {
 
 	function addGroup() {
 
-	$.post("/Board/CreateCardGroup/",
+	$.post("Board/CreateCardGroup/",
 		{
 			projectId: projectId,
 			name: 'New Group'
@@ -149,9 +149,21 @@ function hidePopups() {
 		function (data) {
 			document.getElementById("card-groups").innerHTML +=
 
-				" <li class='column shadow' id='group" + data.data + "'><div class='column-header'><div class='columns' style='margin: 0'><span class='handle' style='cursor: move; padding-right: 10px'>=</span><h6 onkeydown='if (event.keyCode == 13) { $('.editable-Gname').blur(); return false; }' class='editable-Gname' style='line-height: 1.5rem; width:80%' spellcheck='false' contenteditable='true'>New Group</h6> <button onclick=selectGroup(" + data.data + ") tabindex='0' data-toggle='popover' class='btn close float-right text-center btn-transparent' style='cursor:pointer; font-size: 20px; width:10%'><span aria-hidden='true'>⋮</span></button> </div></div>"
-			+ "<ul class='task-list' id=" + data.data + "></ul><div class='column-button'> <button onclick=addTask(" + data.data + ") class='btn btn-transparent' style='color:#fff' class='btn btn-transparent'> + Add card</button ></div> "
-				+ "</li > ";
+				"<li class='column shadow' id='group" +data.data+"'>"
+				+ "<div class='handle column-header' style='cursor:move'>"
+				+ "<div class='handle columns' style='margin:0; width:100%'>"
+				+ "<h6 onkeydown='if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }' class='handle editable-Gname' style='line-height:1.5rem; width:100%;' spellcheck='false' contenteditable='true'>New Group</h6>"
+				+ "<button onclick=selectGroup('" + data.data +"') tabindex='0' data-toggle='popover' class='btn close float-right text-center' style='text-shadow:none; color:white; cursor:pointer; font-size: 18px; width:10%'>"
+				+ "<span aria-hidden='true'><i class='fas fa-ellipsis-v'></i></span>"
+				+ "</button>"
+				+ "</div>"
+				+ "</div>"
+				+ "<ul class='task-list' id='" + data.data +"'>"
+				+ "</ul>"
+				+ "<div class='column-button'>"
+				+ "<button onclick=addTask('" + data.data +"') class='btn btn-transparent' style='color:#fff'>+ Add card</button>"
+				+ "</div>"
+				+ "</li>";
 
 			$('[data-toggle="popover"]').popover({
 				html: true,
@@ -167,22 +179,25 @@ function hidePopups() {
 	selectedGroupId = cardgroupId;
 	}
 
-	function addTask(groupid) {
+function addTask(groupid) {
 
-	$.post("/Board/CreateCard/",
+	$.post("Board/CreateCard/",
 		{
 			groupId: groupid,
 			name: 'New Card'
 		},
 		function (data) {
-			document.getElementById('group'+groupid).children[1].innerHTML +=
-				"<li class='task' id='card" + data.data + "' style='display: block'><div contenteditable='true' spellcheck='false' onkeydown='if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }' class='editable-Cname'>New Card</div><div id='card-labels'></div>"  
+			document.getElementById('group' + groupid).children[1].innerHTML +=
+				"<li class='task' id='card" + data.data + "' style='display: block'><div contenteditable='true' spellcheck='false' onkeydown='if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }' class='editable-Cname'>New Card</div><div id='card-labels'></div>"
 				+ "<div class='task-menu justify-content-between'>"
-			    +"<div id='deletecardbtn"+data.data+"' class='task-menu-button-delete task-menu-button'><i class='far fa-trash-alt'></i></div>"
-				+ "<div style='display:inline-flex'>"
-				+ "<div id='colorcardbtn"+data.data+"' class='task-menu-button task-menu-button-color'><i class='fas fa-palette'></i></div>"
-				+ "<div id='labelcardbtn"+data.data+"' class='task-menu-button task-menu-button-label'><i class='fas fa-tag'></i></div>"
-				+"<div id='attachmentcardbtn"+data.data+"' class='task-menu-button task-menu-button-attachment'><i class='fas fa-paperclip'></i></div>"
+					+ "<div id='deletecardbtn" + data.data + "' class='task-menu-button-delete task-menu-button'><i class='far fa-trash-alt'></i></div>"
+					+ "<div style='display:inline-flex'>"
+						+ "<div id='colorcardbtn@(card.Id)' class='task-menu-button task-menu-button-color'>"
+						+ "<i class='fas fa-palette'></i>"
+						+"<input id='cardColorInput"+data.data+"' type='color' class='form-control card-color-input' style='cursor: pointer !important; transform: translate(-6px, -24px) !important; opacity: 0 !important; border-radius: 0 !important; height: 100% !important; width: 100% !important;'>"
+					+ "</div>"
+					+ "<div id='labelcardbtn"+data.data+"' class='task-menu-button task-menu-button-label'><i class='fas fa-tag'></i></div>"
+					+"<div id='attachmentcardbtn"+data.data+"' class='task-menu-button task-menu-button-attachment'><i class='fas fa-paperclip'></i></div>"
 				+ "</div>"
 				+ "</div>"
 				+ "</li>";
@@ -200,11 +215,11 @@ $('[data-toggle="popover"]').popover({
 });
 
 function deleteProject() {
-	$.post("/Board/DeleteProject/",
+	$.post("Board/DeleteProject/",
 		{
 			projectId: projectId
 		}, function () {
-			window.location.href = 'https://localhost:44343/Dashboard';
+			window.location.href = 'https://localhost/Kanvas/Dashboard';
 
 	});
 }
@@ -249,7 +264,7 @@ $(document).on('focusout', '.editable-Gname', function () {
 	CardsBeingEdited = false;
 	if ($(this).text() != editingGroupName && $(this).text() != '') {
 
-		$.post("/Board/ChangeGroupName/",
+		$.post("Board/ChangeGroupName/",
 			{
 				groupId: editingGroupId.replace("group", ""),
 				name: $(this).text()
@@ -278,7 +293,7 @@ $(document).on('focusout', '.editable-Cname', function () {
 		var cardid = this.parentElement.id.replace('card','');
 
 
-		$.post("/Board/ChangeCardName/",
+		$.post("Board/ChangeCardName/",
 			{
 				groupId: this.parentElement.parentElement.id,
 				cardId: cardid,
@@ -304,7 +319,7 @@ $(document).on('focusout', '.editable-Lname', function () {
 		var id = this.parentElement.id.replace('modal-label', '');
 		var newText = $(this).text();
 
-		$.post("/Board/ChangeLabelName/",
+		$.post("Board/ChangeLabelName/",
 			{
 				labelId: id,
 				name: newText
@@ -380,7 +395,7 @@ $(document).on('change', '.card-color-input', function () {
 	document.getElementById('card' + cardid).style = 'display:block; background:' + this.value;
 
 
-	$.post("/Board/ChangeCardColor/",
+	$.post("Board/ChangeCardColor/",
 		{
 			cardId: cardid,
 			color: this.value
@@ -393,7 +408,7 @@ $(document).on('change', '.card-color-input', function () {
 $(document).on('change', '#bgColorInput', function () {
 	document.getElementById('board-background').style.background = this.value;
 
-	$.post("/Board/ChangeColors/",
+	$.post("Board/ChangeColors/",
 		{
 			projectId: projectId,
 			bgcolor: this.value,
@@ -405,7 +420,7 @@ $(document).on('change', '#bgColorInput', function () {
 });
 
 function setBackgroundImage(imageurl) {
-	$.post("/Board/ChangeColors/",
+	$.post("Board/ChangeColors/",
 		{
 			projectId: projectId,
 			bgcolor: 'url('+imageurl+')',
@@ -426,7 +441,7 @@ $(document).on('input', '#group-color-input', function () {
 $(document).on('change', '#group-color-input', function () {
 	document.getElementById('group' + selectedGroupId).style = 'background:' + this.value;
 	hidePopups();
-	$.post("/Board/ChangeGroupCardColor/",
+	$.post("Board/ChangeGroupCardColor/",
 		{
 			groupId: selectedGroupId,
 			color: this.value
@@ -443,7 +458,7 @@ $(document).on('input', '.label-color-btn', function () {
 $(document).on('change', '.label-color-btn', function () {
 	var id = this.id
 	var color = this.value;
-	$.post("/Board/ChangeLabelColor/",
+	$.post("Board/ChangeLabelColor/",
 		{
 			labelId: id,
 			color: color
@@ -459,7 +474,7 @@ $(document).on('click', '.label-delete-btn', function () {
 
 	var id = this.id
 
-	$.post("/Board/DeleteLabel/",
+	$.post("Board/DeleteLabel/",
 		{
 			labelId: id
 		},
@@ -477,7 +492,7 @@ $(document).on('click', '.label-create-btn', function () {
 
 	const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
-	$.post("/Board/MakeLabel/",
+	$.post("Board/MakeLabel/",
 		{
 			projectId: projectId,
 			name: "New Label",
@@ -511,7 +526,7 @@ $(document).on('click', '.label-name-btn', function (e) {
 	var id = this.id.replace('modal-label','');
 
 		//card doenst have label
-		$.post("/Board/AddRemoveLabelToCard/",
+		$.post("Board/AddRemoveLabelToCard/",
 			{
 				labelId: id,
 				cardId: openedCardId

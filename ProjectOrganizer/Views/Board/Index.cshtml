@@ -30,7 +30,7 @@
 				@foreach (var group in Model.Project.CardGroups.OrderBy(c => c.Position))
 				{
 					<li class="column shadow" style="background:@group.Color" id="group@(group.Id)">
-						<div class="handle column-header" style="cursor:pointer">
+						<div class="handle column-header" style="cursor:move">
 							<div class="handle columns" style="margin:0; width:100%">
 								<h6 onkeydown="if (event.keyCode == 13 || event.keyCode == 27) { $(this).blur(); return false; }" class="handle editable-Gname" style="line-height:1.5rem; width:100%;" spellcheck="false" contenteditable="true">@group.Name</h6>
 								<button onclick=selectGroup('@group.Id') tabindex="0" data-toggle="popover" class="btn close float-right text-center" style="text-shadow:none;color:white;cursor:pointer; font-size: 18px; width:10%">
@@ -84,49 +84,32 @@
 				<button onclick=addGroup() class="btn btn-transparent foreground-item-transparent" style="color:#fff ; width: 100%">+ New Group</button>
 			</div>
 		</div>
-
-
 	</div>
 
 	<!--Menu-->
-	<div id="main-menu" class="collapse container col-sm-2 shadow-lg float-right" style="background-color:#242d4788; height: 100%;z-index:1000; padding-top:50px; transition-duration:0s">
+	<div id="main-menu" class="collapse container col-sm-2 shadow-lg float-right" style="backdrop-filter:blur(10px); background-color:#242d4788; height: 100%;z-index:1000; padding-top:50px; transition-duration:0s">
 		<div style="padding: 25px;">
-
-
-
 			<ul class="list-group">
-				<li class="btn list-group-item" style="text-align: center; padding: 5px; border: 0; background-color:transparent">
-					<a class="btn btn-transparent text-white">
-						<p>About project</p>
-					</a>
-				</li>
-				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+				<li class="btn list-group-item" style="padding: 5px; border: 0; background-color:transparent">
 					<a data-toggle="modal" data-target="#ChangeBackgroundModal" class="btn btn-transparent  text-white">
 						<p>Change Background</p>
 					</a>
 				</li>
-
-				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+				<li class="btn list-group-item" style="padding: 5px; border: 0; background-color:transparent">
 					<a data-toggle="modal" data-target="#ShareModal" class="btn btn-transparent  text-white">
 						<p>Share Project</p>
 					</a>
 				</li>
-				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
-					<a data-toggle="modal" data-target="#CardAttachmentsModal" class="btn btn-transparent  text-white">
-						<p>Google Drive</p>
-					</a>
-				</li>
-				<li class="btn list-group-item" style="text-align:center ;padding: 5px; border: 0; background-color:transparent">
+				<li class="btn list-group-item" style="padding: 5px; border: 0; background-color:transparent">
 					<a data-toggle="modal" data-target="#SettingsModal" class="btn btn-transparent  text-white">
 						<p>Project Settings</p>
 					</a>
 				</li>
 			</ul>
-
 		</div>
 	</div>
-</div>
 
+</div>
 
 <!--Change Background Modal-->
 <div class="modal fade" id="ChangeBackgroundModal" tabindex="-1" role="dialog">
@@ -147,8 +130,8 @@
 						</a>
 
 					</div>
-						<input type="text" class="form-control" placeholder="Search photos..." id="bgImageInput">
-					
+					<input type="text" class="form-control" placeholder="Search photos..." id="bgImageInput">
+
 					<div id="thumbnailPhotoList" class="flex-wrap d-inline-flex justify-content-center">
 
 
@@ -178,7 +161,6 @@
 		</div>
 	</div>
 </div>
-
 
 <!--Card Label Modal-->
 <div class="modal fade" id="CardLabelModal" tabindex="-1" role="dialog">
@@ -217,19 +199,40 @@
 
 <!--Card Attachments Modal-->
 <div class="modal fade" id="CardAttachmentsModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-dialog-centered modal-lg">
+	<div class="modal-dialog modal-dialog-centered modal">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header" style="height:70px">
 				<h5 class="modal-title text-dark"><i class="fas fa-paperclip"></i> Card Attachments</h5>
+				@if (Model.ProjectUser.UserRole != ProjectOrganizer.Models.WorkspaceModels.ProjectUser.UserRoles.Viewer)
+				{
+					<button onclick=ToggleAddAttachments() id="add-attachment-btn" class="btn btn-primary ml-2" style="font-size:17px"><i class="fas fa-plus"></i></button>
+
+				}
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true" class="text-dark">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body align-content-center" style="margin-left: 150px; min-height: 400px">
-				<div class="col-8 align-self-center">
+			<div class="modal-body align-content-center" style="min-height: 400px">
+
+				<div class="add-attachment-list a-hide text-dark" id="add-attachments-list">
+					<button onclick=ToggleAddAttachments() class="btn btn-transparent" style="color:#000"><i class="fas fa-arrow-left"></i></button>
+					<div style="display:flex!important; justify-content:center; margin-top:3rem">
+
+						<div class="add-attachment-item" id="add-attachment-link">
+							<i class="fas fa-external-link-alt"></i> Link
+						</div>
+						<div class="add-attachment-item" id="add-attachment-googledrive">
+							<img src="~/images/google_drive_logo.png" style="height:20px" /> Google drive
+						</div>
+					</div>
+				</div>
+
+				<div class="attachment-item-list a-show" id="attachments-list">
+
 
 
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -264,6 +267,10 @@
 	<script src="~/js/PexelsApiLogic.js"></script>
 	<script src="~/js/BoardLogic.js"></script>
 	<script src="~/js/ShareLogic.js"></script>
+
+	<script src="~/js/AttachmentsLogic.js"></script>
+	<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+
 	<script>
 
 
@@ -273,7 +280,7 @@
 			}
 		});
 
-		
+
 
 		document.getElementById('bgImageInput').value = 'landscape';
 		PexelSearch();

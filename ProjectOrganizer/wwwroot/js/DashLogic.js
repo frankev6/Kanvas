@@ -32,24 +32,24 @@ function makeNewProject() {
 
 	if (typeof selectedTeamId === 'undefined') {
 
-		$.post("/Dashboard/NewProject/",
+		$.post("Dashboard/NewProject/",
 			{
 				name: Pname,
 				description: Pdesc
 			},
 			function (data) {
-				location.href = "https://localhost:44343/board?id=" + data.responseText;
+				location.href = "board?id=" + data.responseText;
 			});
 
 	} else {
-		$.post("/Teams/NewProject/",
+		$.post("Teams/NewProject/",
 			{
 				teamId: selectedTeamId,
 				name: Pname,
 				description: Pdesc
 			},
 			function (data) {
-				location.href = "https://localhost:44343/board?id=" + data.responseText;
+				location.href = "board?id=" + data.responseText;
 			});
 	}	
 }
